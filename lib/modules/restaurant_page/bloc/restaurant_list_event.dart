@@ -1,4 +1,4 @@
-part of 'restaurant_list_bloc.dart';
+part of '../bloc/restaurant_list_bloc.dart';
 
 @immutable
 abstract class RestaurantListEvent {}

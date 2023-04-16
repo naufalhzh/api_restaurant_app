@@ -7,7 +7,6 @@ const baseUrl = 'https://restaurant-api.dicoding.dev';
 
 Future<List<Restaurant>> fetchRestaurants() async {
   final response = await http.get(Uri.parse('$baseUrl/list'));
-
   if (response.statusCode == 200) {
     final result = jsonDecode(response.body);
     final list = result['restaurants'] as List<dynamic>;
@@ -19,7 +18,8 @@ Future<List<Restaurant>> fetchRestaurants() async {
 
 Future<RestaurantDetail> fetchRestaurantDetail(String id) async {
   final response = await http.get(Uri.parse('$baseUrl/detail/$id'));
-
+  print('Response status code: ${response.statusCode}');
+  print('Response body: ${response.body}');
   if (response.statusCode == 200) {
     final result = jsonDecode(response.body);
     return RestaurantDetail.fromJson(result['restaurant']);
@@ -30,7 +30,6 @@ Future<RestaurantDetail> fetchRestaurantDetail(String id) async {
 
 Future<List<Restaurant>> searchRestaurants(String query) async {
   final response = await http.get(Uri.parse('$baseUrl/search?q=$query'));
-
   if (response.statusCode == 200) {
     final result = jsonDecode(response.body);
     final list = result['restaurants'] as List<dynamic>;

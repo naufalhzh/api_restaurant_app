@@ -1,5 +1,7 @@
-import 'package:api_restaurant_app/bloc/restaurant_list_bloc.dart';
+import 'package:api_restaurant_app/modules/restaurant_detail_page/bloc/restaurant_list_detail_bloc.dart';
+import 'package:api_restaurant_app/modules/restaurant_page/bloc/restaurant_list_bloc.dart';
 import 'package:api_restaurant_app/modules/restaurant_detail_page/view/restaurant_detail_page.dart';
+import 'package:api_restaurant_app/modules/restaurant_page/bloc/restaurant_list_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -94,7 +96,7 @@ class _RestaurantListState extends State<RestaurantList> {
                   Expanded(
                     child: BlocBuilder<RestaurantListBloc, RestaurantListState>(
                       builder: (context, state) {
-                        if (state is LoadingState) {
+                        if (state is RestaurantListLoading) {
                           return Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +107,7 @@ class _RestaurantListState extends State<RestaurantList> {
                               ],
                             ),
                           );
-                        } else if (state is RestaurantListLoadedState) {
+                        } else if (state is RestaurantListLoaded) {
                           final restaurants = state.restaurants;
                           return ListView.builder(
                             itemCount: restaurants.length,
@@ -121,9 +123,17 @@ class _RestaurantListState extends State<RestaurantList> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            RestaurantDetailPage(
-                                                id: restaurant.id),
+                                        builder: (context) => BlocProvider(
+                                          create: (context) =>
+                                              RestaurantListDetailBloc()
+                                                ..add(
+                                                    FetchRestaurantDetailEvent(
+                                                        restaurant.id)),
+                                          child: RestaurantDetailPage(
+                                            id: restaurant.id,
+                                            deviceIndex: index,
+                                          ),
+                                        ),
                                       ),
                                     );
                                   },
@@ -234,9 +244,14 @@ class _RestaurantListState extends State<RestaurantList> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            RestaurantDetailPage(
-                                                id: restaurant.id),
+                                        builder: (context) => BlocProvider(
+                                          create: (context) =>
+                                              RestaurantListDetailBloc(),
+                                          child: RestaurantDetailPage(
+                                            id: restaurant.id,
+                                            deviceIndex: index,
+                                          ),
+                                        ),
                                       ),
                                     );
                                   },
@@ -328,11 +343,11 @@ class _RestaurantListState extends State<RestaurantList> {
                               );
                             },
                           );
-                        } else if (state is EmptyState) {
+                        } else if (state is RestaurantListEmpty) {
                           return const Center(
                             child: Text('No restaurants found'),
                           );
-                        } else if (state is ErrorState) {
+                        } else if (state is RestaurantListError) {
                           return const Center(
                             child: Text('Failed to load restaurants'),
                           );
