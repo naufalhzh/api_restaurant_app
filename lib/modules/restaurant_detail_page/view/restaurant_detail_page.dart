@@ -1,4 +1,3 @@
-
 import 'package:api_restaurant_app/modules/restaurant_detail_page/bloc/restaurant_list_detail_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -198,30 +197,51 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                                     .toList(),
                               ),
                               const SizedBox(height: 16.0),
-                              const Text(
-                                'Customer Reviews:',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                              Column(
-                                children: restaurant.customerReviews
-                                    .map((review) => ListTile(
-                                          title: Text(review.name),
-                                          subtitle: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(review.review),
-                                              Text(
-                                                review.date,
-                                                style: const TextStyle(
-                                                    fontSize: 12.0,
-                                                    fontStyle:
-                                                        FontStyle.italic),
+                              SizedBox(
+                                height: 200,
+                                width: double.infinity,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: restaurant.customerReviews.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final review =
+                                        restaurant.customerReviews[index];
+                                    return Card(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              review.name,
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                            ],
-                                          ),
-                                        ))
-                                    .toList(),
+                                            ),
+                                            SizedBox(height: 8.0),
+                                            Text(
+                                              review.review,
+                                              style: TextStyle(
+                                                fontSize: 14.0,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8.0),
+                                            Text(
+                                              review.date,
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ],
                           ),

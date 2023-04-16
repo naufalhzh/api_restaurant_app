@@ -17,6 +17,7 @@ class RestaurantList extends StatefulWidget {
 class _RestaurantListState extends State<RestaurantList> {
   late final InternetConnectionChecker _connectionChecker;
   bool _hasInternetConnection = true;
+  final int deviceIndex = 0;
 
   @override
   void initState() {
@@ -131,7 +132,7 @@ class _RestaurantListState extends State<RestaurantList> {
                                                         restaurant.id)),
                                           child: RestaurantDetailPage(
                                             id: restaurant.id,
-                                            deviceIndex: index,
+                                            deviceIndex: deviceIndex,
                                           ),
                                         ),
                                       ),
@@ -249,7 +250,7 @@ class _RestaurantListState extends State<RestaurantList> {
                                               RestaurantListDetailBloc(),
                                           child: RestaurantDetailPage(
                                             id: restaurant.id,
-                                            deviceIndex: index,
+                                            deviceIndex: deviceIndex,
                                           ),
                                         ),
                                       ),
