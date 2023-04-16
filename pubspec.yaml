@@ -1,0 +1,25 @@
+name: api_restaurant_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=2.19.6 <3.0.0'
+
+dependencies:
+  bloc: ^8.1.1
+  connectivity: ^3.0.6
+  dio: ^5.1.1
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.2
+  http: ^0.13.5
+  internet_connection_checker: ^1.0.0+1
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
